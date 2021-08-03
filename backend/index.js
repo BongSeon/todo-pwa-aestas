@@ -21,16 +21,23 @@
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
   })
-  
+
   let db = admin.firestore()
 
 
   /*
-  endpoint
+  endpoint - tasks
   */
 
-  app.get('/', (request, response) => {
-    response.send('I love Mihye')
+  app.get('/tasks', (request, response) => {
+    let tasks = []
+
+    db.collection('tasks').orderBy('id', 'asc').get().then(snapshot => {
+      snapshot.forEach(doc => {
+        tasks.push(doc.data())
+      })
+      response.send(tasks)
+    })
   })
 
   /*
