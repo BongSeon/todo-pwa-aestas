@@ -40,6 +40,8 @@
 </template>
 
 <script>
+var qs = require('qs')
+
 export default {
   name: 'PageTodo',
   data() {
@@ -49,20 +51,22 @@ export default {
     }
   },
   methods: {
-    addTask() {
-      let newTask = {
-        id: Date.now(),
-        title: this.newTask
-      }
-      this.tasks.push(newTask)
-      this.newTask = ''
-    },
     getTasks() {
       this.$axios.get('http://localhost:3000/tasks').then(response => {
         this.tasks = response.data
       }).catch(err => {
         console.log('error: ', err)
       })
+    },
+    addTask() {
+      let newTask = {
+        id: Date.now(),
+        title: this.newTask
+      }
+      this.$axios.post(`http://localhost:3000/createTask?${ qs.stringify(newTask) }`).then(response => {
+        this.tasks.push(newTask)
+      })
+      this.newTask = ''
     }
   },
   mounted() {

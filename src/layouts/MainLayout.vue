@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title class="text-center">
-          Todo PWA Aestas
+          T O D O
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
