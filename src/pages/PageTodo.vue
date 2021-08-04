@@ -45,16 +45,7 @@ export default {
   data() {
     return {
       newTask: '',
-      tasks: [
-        {
-          id: 1593467150887,
-          title: 'Do this'
-        },
-        {
-          id: 1593467166614,
-          title: 'Do that'
-        }
-      ]
+      tasks: []
     }
   },
   methods: {
@@ -65,7 +56,17 @@ export default {
       }
       this.tasks.push(newTask)
       this.newTask = ''
+    },
+    getTasks() {
+      this.$axios.get('http://localhost:3000/tasks').then(response => {
+        this.tasks = response.data
+      }).catch(err => {
+        console.log('error: ', err)
+      })
     }
+  },
+  mounted() {
+    this.getTasks()
   }
 }
 </script>

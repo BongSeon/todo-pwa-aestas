@@ -30,6 +30,9 @@
   */
 
   app.get('/tasks', (request, response) => {
+    // CORS 세팅 : 모든 origin에 대해 모두 허용
+    response.set('Access-Control-Allow-Origin', '*')
+    
     let tasks = []
 
     db.collection('tasks').orderBy('id', 'asc').get().then(snapshot => {
