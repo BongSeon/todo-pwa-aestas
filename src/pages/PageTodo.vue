@@ -52,10 +52,10 @@ export default {
   },
   methods: {
     getTasks() {
+      this.$q.loading.show()
       this.$axios.get('http://localhost:3000/tasks').then(response => {
         this.tasks = response.data
-      }).catch(err => {
-        console.log('error: ', err)
+        this.$q.loading.hide()
       })
     },
     addTask() {
@@ -63,8 +63,10 @@ export default {
         id: Date.now(),
         title: this.newTask
       }
+      this.$q.loading.show()
       this.$axios.post(`http://localhost:3000/createTask?${ qs.stringify(newTask) }`).then(response => {
         this.tasks.push(newTask)
+        this.$q.loading.hide()
       })
       this.newTask = ''
     }
